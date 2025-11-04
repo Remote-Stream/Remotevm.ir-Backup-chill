@@ -445,12 +445,14 @@
         }
         .form-group {
             margin-bottom: 1.5rem;
+            
         }
         .form-label {
             display: block;
             font-weight: 600;
             margin-bottom: 0.5rem;
             color: var(--text-dark);
+            
         }
         body.light-mode .form-label {
             color: var(--text-light);
@@ -473,6 +475,7 @@
         input:focus, select:focus {
             outline: none;
             border-color: #667eea;
+            background: rgb(40, 38, 41);
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
         /* هر آیتم: متن چپ، سوئیچ راست */
