@@ -83,7 +83,7 @@ features.forEach((feature, index) => {
     let content = `
         <i class="fas ${feature.icon} feature-icon micro-animation"></i>
         <h3 class="feature-title text-xl font-semibold mb-2">${feature.title}</h3>
-        <p class="feature-desc text-gray-300">${feature.desc}</p>
+        <p class="feature-desc text-l-400">${feature.desc}</p>
     `;
     if (feature.url) {
         content += `<a href="${feature.url}" target="_blank" rel="noopener noreferrer" class="btn-modern mt-4 block w-full text-center">شروع کنید</a>`;
