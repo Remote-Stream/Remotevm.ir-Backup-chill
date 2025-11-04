@@ -7,10 +7,12 @@
     <meta name="keywords" content="تماس تصویری, RemoteVM, ویدیو کنفرانس, استریم, پخش آنلاین">
     <meta name="author" content="RemoteVM">
     <title>RemoteVM - استودیو انتقال تصویر مدرن</title>
+    <link rel="stylesheet" type="text/css" href="./assets/style.css" />
     <link rel="icon" type="image/png" href="favicon.png" sizes="32x32">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" async>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+
     <script>
         tailwind.config = {
             theme: {
@@ -20,6 +22,7 @@
                     },
                     colors: {
                         'neon-blue': '#00bfff',
+                        'neon': '#0fffff',
                         'neon-pink': '#ff32d3',
                         'primary': '#6366f1',
                         'success': '#22c55e',
@@ -33,1503 +36,296 @@
             }
         }
     </script>
-    <style>
-        body {
-            font-family: 'Vazirmatn', sans-serif;
-            background: var(--dark-bg, linear-gradient(135deg, #07102e 0%, #13173a 100%));
-            color: white;
-            overflow-x: hidden;
-        }
-        .light-mode {
-            background: linear-gradient(135deg, #aeeafc 0%, #caf0fc 100%);
-            color: #1e293b;
-        }
-        .hero-gradient {
-            background: linear-gradient(135deg, rgba(0, 191, 255, 0.1) 0%, rgba(255, 50, 211, 0.1) 100%);
-        }
-        .card-hover {
-            transition: all 0.3s ease;
-            transform: translateY(0);
-        }
-        .card-hover:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 191, 255, 0.3);
-        }
-        .micro-animation {
-            transition: transform 0.2s ease;
-        }
-        .micro-animation:hover {
-            transform: scale(1.05);
-        }
-        @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 5px rgba(0, 191, 255, 0.5); }
-            50% { box-shadow: 0 0 20px rgba(0, 191, 255, 0.8); }
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-        .floating {
-            animation: float 3s ease-in-out infinite;
-        }
-        .scroll-reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
-        }
-        .scroll-reveal.revealed {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .cursor-custom {
-            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><circle cx='16' cy='16' r='8' fill='%2300bfff' opacity='0.5'/></svg>"), auto;
-        }
-        .btn-modern {
-            background: linear-gradient(135deg, var(--neon-blue, #00bfff), var(--neon-pink, #ff32d3));
-            border: none;
-            border-radius: 50px;
-            padding: 12px 24px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .btn-modern::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
-        }
-        .btn-modern:hover::before {
-            left: 100%;
-        }
-        .btn-modern:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 191, 255, 0.3);
-        }
-        .feature-card {
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 191, 255, 0.2);
-            border-radius: 20px;
-            padding: 2rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
-        }
-        .featured-card {
-            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(16, 163, 74, 0.1));
-            border-color: var(--success, #22c55e);
-        }
-        .featured-card::before {
-            background: linear-gradient(90deg, var(--success), #16a34a);
-        }
-        @media (prefers-reduced-motion: reduce) {
-            * { animation-duration: 0.01ms !important; }
-        }
-        :root {
-            --dark-bg: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-            --light-bg: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
-            --card-bg-dark: rgba(15, 15, 35, 0.9);
-            --card-bg-light: rgba(255, 255, 255, 0.95);
-            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --success: #10b981;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --neon-glow: 0 0 20px rgba(102, 126, 234, 0.5);
-            --border-dark: rgba(102, 126, 234, 0.2);
-            --border-light: rgba(102, 126, 234, 0.1);
-            --text-dark: #f8fafc;
-            --text-light: #1e293b;
-            --shadow-dark: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
-            --shadow-light: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-        * {
-            box-sizing: border-box;
-        }
-        html {
-            scroll-behavior: smooth;
-            scroll-padding-top: 80px;
-        }
-        body {
-            font-family: 'Vazirmatn', sans-serif;
-            background: var(--dark-bg);
-            color: var(--text-dark);
-            margin: 0;
-            min-height: 100vh;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            overflow-x: hidden;
-        }
-        body.light-mode {
-            background: var(--light-bg);
-            color: var(--text-light);
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-        header {
-            background: rgba(15, 15, 35, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-dark);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            transition: background 0.3s ease;
-        }
-        body.light-mode header {
-            background: rgba(255, 255, 255, 0.95);
-            border-bottom: 1px solid var(--border-light);
-        }
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-        }
-        .logo-section {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        .logo img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            box-shadow: var(--neon-glow);
-        }
-        .logo h1 {
-            margin: 0;
-            font-size: 1.5rem;
-            font-weight: 700;
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .status-indicator {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--danger);
-            box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
-            animation: pulse-ring 2s infinite;
-        }
-        .status-active {
-            background: var(--success);
-            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
-            animation: pulse-ring 2s infinite;
-        }
-        @keyframes pulse-ring {
-            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-        }
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-            position: relative;
-            overflow: hidden;
-        }
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-        .btn:hover::before {
-            left: 100%;
-        }
-        .btn-primary {
-            background: var(--primary-gradient);
-            color: white;
-            box-shadow: var(--neon-glow);
-        }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
-        }
-        .btn-secondary {
-            background: var(--secondary-gradient);
-            color: white;
-        }
-        .btn-secondary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(245, 87, 108, 0.4);
-        }
-        .btn-neutral {
-            background: rgba(102, 126, 234, 0.1);
-            color: var(--text-dark);
-            border: 1px solid var(--border-dark);
-        }
-        body.light-mode .btn-neutral {
-            background: rgba(102, 126, 234, 0.05);
-            color: var(--text-light);
-            border: 1px solid var(--border-light);
-        }
-        .btn-neutral:hover {
-            background: rgba(102, 126, 234, 0.2);
-            transform: translateY(-2px);
-        }
-        .menu-toggle {
-            background: none;
-            border: none;
-            color: var(--text-dark);
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 0.5rem;
-            display: block;
-        }
-        body.light-mode .menu-toggle {
-            color: var(--text-light);
-        }
-        .header-actions nav {
-            display: none;
-        }
-        .mobile-menu {
-            position: fixed;
-            top: 0;
-            right: -100%;
-            width: 300px;
-            height: 100vh;
-            background: var(--card-bg-dark);
-            transition: right 0.3s ease;
-            z-index: 200;
-            padding: 2rem 0;
-            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
-        }
-        body.light-mode .mobile-menu {
-            background: var(--card-bg-light);
-        }
-        .mobile-menu.active {
-            right: 0;
-        }
-        .mobile-menu ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        .mobile-menu li {
-            margin: 0;
-        }
-        .mobile-menu a {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem 2rem;
-            color: var(--text-dark);
-            text-decoration: none;
-            transition: background 0.3s ease;
-            border-bottom: 1px solid var(--border-dark);
-        }
-        body.light-mode .mobile-menu a {
-            color: var(--text-light);
-            border-bottom: 1px solid var(--border-light);
-        }
-        .mobile-menu a:hover {
-            background: rgba(102, 126, 234, 0.1);
-        }
-        .menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 150;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-        .menu-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        .overlay {
-            position: fixed;
-            inset: 0;
-            background: var(--primary-gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            opacity: 1;
-            transition: opacity 0.5s ease;
-        }
-        .overlay.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-        .overlay-content h1 {
-            font-size: clamp(2.5rem, 8vw, 4rem);
-            font-weight: 800;
-            background: var(--secondary-gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: glow 2s ease-in-out infinite alternate;
-            margin-bottom: 1rem;
-        }
-        @keyframes glow {
-            from { text-shadow: 0 0 20px rgba(245, 87, 108, 0.5); }
-            to { text-shadow: 0 0 30px rgba(245, 87, 108, 0.8); }
-        }
-        .overlay-icons {
-            display: flex;
-            gap: 1rem;
-        }
-        .overlay-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: white;
-            animation: float 3s ease-in-out infinite;
-        }
-        .overlay-icon:nth-child(2) { animation-delay: 0.5s; }
-        .overlay-icon:nth-child(3) { animation-delay: 1s; }
-        main {
-            padding: 2rem 0;
-        }
-        section {
-            margin-bottom: 4rem;
-        }
-        .section-title {
-            text-align: center;
-            font-size: clamp(1.5rem, 4vw, 2.5rem);
-            font-weight: 700;
-            margin-bottom: 2rem;
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .intro-text {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto 3rem;
-            font-size: 1.1rem;
-            line-height: 1.6;
-            opacity: 0.9;
-        }
-        .video-call-card {
-            background: var(--card-bg-dark);
-            border-radius: 20px;
-            padding: 2rem;
-            border: 1px solid var(--border-dark);
-            box-shadow: var(--shadow-dark);
-            transition: all 0.4s ease;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        body.light-mode .video-call-card {
-            background: var(--card-bg-light);
-            border: 1px solid var(--border-light);
-            box-shadow: var(--shadow-light);
-        }
-        .video-call-card.active {
-            max-width: 100%;
-            padding: 3rem;
-            box-shadow: 0 25px 50px -12px rgba(102, 126, 234, 0.25);
-            border: 1px solid var(--primary-gradient);
-        }
-        .controls-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        .form-label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--text-dark);
-        }
-        body.light-mode .form-label {
-            color: var(--text-light);
-        }
-        input, select {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid var(--border-dark);
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text-dark);
-            font-family: inherit;
-            transition: all 0.3s ease;
-        }
-        body.light-mode input, body.light-mode select {
-            background: rgba(255, 255, 255, 0.8);
-            color: var(--text-light);
-            border: 1px solid var(--border-light);
-        }
-        input:focus, select:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-        .toggle-group {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            margin-bottom: 1rem;
-        }
-        body.light-mode .toggle-group {
-            background: rgba(0, 0, 0, 0.05);
-        }
-        .toggle-label {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 500;
-        }
-        .toggle-switch {
-            position: relative;
-            width: 50px;
-            height: 28px;
-        }
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        .toggle-slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            background-color: #cbd5e1;
-            transition: 0.4s;
-            border-radius: 28px;
-        }
-        .toggle-slider:before {
-            position: absolute;
-            content: "";
-            height: 24px;
-            width: 24px;
-            right: 2px;
-            bottom: 2px;
-            background-color: white;
-            transition: 0.4s;
-            border-radius: 50%;
-        }
-        input:checked + .toggle-slider {
-            background-color: #667eea;
-        }
-        input:checked + .toggle-slider:before {
-            transform: translateX(-22px);
-        }
-        .advanced-toggle {
-            width: 100%;
-            justify-content: space-between;
-            margin-bottom: 1rem;
-        }
-        .advanced-panel {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 10px;
-            padding: 1.5rem;
-            border: 1px solid var(--border-dark);
-            animation: slideDown 0.3s ease;
-        }
-        body.light-mode .advanced-panel {
-            background: rgba(0, 0, 0, 0.03);
-            border: 1px solid var(--border-light);
-        }
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .video-frame {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
-            border-radius: 15px;
-            overflow: hidden;
-            border: 2px solid var(--border-dark);
-            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
-            margin-bottom: 2rem;
-            transition: all 0.4s ease;
-        }
-        .video-call-card.active .video-frame {
-            border-color: #667eea;
-            box-shadow: 0 0 30px rgba(102, 126, 234, 0.3);
-            max-height: 80vh;
-        }
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            border-radius: 13px;
-        }
-        .loading-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            border-radius: 13px;
-        }
-        .loader {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #667eea;
-            animation: pulse-dot 1.4s infinite ease-in-out;
-        }
-        .dot:nth-child(2) { animation-delay: 0.2s; }
-        .dot:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes pulse-dot {
-            0%, 80%, 100% { transform: scale(0); }
-            40% { transform: scale(1); }
-        }
-        .link-section {
-            margin-top: 1.5rem;
-        }
-        .link-input-group {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-        .link-input {
-            flex: 1;
-            padding: 0.75rem;
-            border: 1px solid var(--border-dark);
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text-dark);
-        }
-        body.light-mode .link-input {
-            background: rgba(255, 255, 255, 0.8);
-            color: var(--text-light);
-        }
-        .message {
-            margin-top: 0.5rem;
-            padding: 0.5rem;
-            border-radius: 5px;
-            font-size: 0.9rem;
-        }
-        .message.success {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--success);
-        }
-        .message.error {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--danger);
-        }
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        .feature-card {
-            background: var(--card-bg-dark);
-            border-radius: 20px;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.3s ease;
-            border: 1px solid var(--border-dark);
-            position: relative;
-            overflow: hidden;
-        }
-        body.light-mode .feature-card {
-            background: var(--card-bg-light);
-            border: 1px solid var(--border-light);
-        }
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--primary-gradient);
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-        }
-        .feature-card:hover::before {
-            transform: scaleX(1);
-        }
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-dark);
-        }
-        .feature-icon {
-            font-size: 3rem;
-            color: #667eea;
-            margin-bottom: 1rem;
-            animation: iconFloat 2s ease-in-out infinite;
-        }
-        @keyframes iconFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
-        }
-        .feature-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-        .feature-desc {
-            opacity: 0.8;
-            line-height: 1.5;
-        }
-        .featured-card {
-            border-color: #667eea;
-            box-shadow: var(--neon-glow);
-        }
-        .featured-card a {
-            color: inherit;
-            text-decoration: none;
-        }
-        .about-btn {
-            display: inline-block;
-            margin-top: 1rem;
-        }
-        footer {
-            background: rgba(15, 15, 35, 0.95);
-            padding: 2rem 0;
-            text-align: center;
-            border-top: 1px solid var(--border-dark);
-        }
-        body.light-mode footer {
-            background: rgba(255, 255, 255, 0.95);
-            border-top: 1px solid var(--border-light);
-        }
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-        }
-        .footer-links a {
-            color: var(--text-dark);
-            text-decoration: none;
-            opacity: 0.8;
-            transition: opacity 0.3s ease;
-        }
-        body.light-mode .footer-links a {
-            color: var(--text-light);
-        }
-        .footer-links a:hover {
-            opacity: 1;
-        }
-        @media (max-width: 768px) {
-            .controls-grid {
-                grid-template-columns: 1fr;
-            }
-            .video-call-card {
-                padding: 1.5rem;
-            }
-            .video-call-card.active {
-                padding: 2rem;
-            }
-            .features-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-            .footer-links {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            .video-frame {
-                aspect-ratio: 9 / 16;
-                max-height: 90vh;
-            }
-            iframe {
-                transform: scale(0.8);
-                transform-origin: center;
-            }
-        }
-        input[type="range"] {
-            -webkit-appearance: none;
-            appearance: none;
-            height: 6px;
-            border-radius: 3px;
-            background: var(--border-dark);
-            outline: none;
-        }
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #667eea;
-            cursor: pointer;
-            box-shadow: var(--neon-glow);
-        }
-        input[type="range"]::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #667eea;
-            cursor: pointer;
-            border: none;
-            box-shadow: var(--neon-glow);
-        }
-        [data-tooltip] {
-            position: relative;
-        }
-        [data-tooltip]:hover::after {
-            content: attr(data-tooltip);
-            position: absolute;
-            bottom: 100%;
-            right: 50%;
-            transform: translateX(50%);
-            background: var(--primary-gradient);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 10px;
-            font-size: 0.8rem;
-            white-space: nowrap;
-            z-index: 10;
-            margin-bottom: 0.5rem;
-        }
-        .hidden {
-            display: none !important;
-        }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-in-up {
-            animation: fadeInUp 0.6s ease forwards;
-        }
-    </style>
+
 </head>
-<body class="min-h-screen">
+<body class="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white">
+
     <!-- Loading Overlay -->
-    <div id="overlay" class="overlay">
-        <div class="overlay-content">
-            <h1>RemoteVM</h1>
-            <p style="font-size: 1.2rem; margin-bottom: 2rem;">استودیو انتقال تصویر</p>
-            <div class="overlay-icons">
-                <div class="overlay-icon"><i class="fas fa-video"></i></div>
-                <div class="overlay-icon"><i class="fas fa-microphone"></i></div>
-                <div class="overlay-icon"><i class="fas fa-comments"></i></div>
+    <div id="overlay" class="overlay fixed inset-0 bg-black/90 backdrop-blur-xl flex items-center justify-center z-50 transition-opacity duration-500">
+        <div class="overlay-content text-center animate-pulse">
+            <h1 class="text-5xl md:text-6xl font-bold bg-gradient-to-r from-neon-blue to-neon mb-4">
+                RemoteVM
+            </h1>
+            <p class="text-lg md:text-xl opacity-80 mb-8">استودیو انتقال تصویر</p>
+            <div class="overlay-icons flex justify-center gap-6 text-3xl">
+                <div class="overlay-icon animate-bounce" style="animation-delay: 0s;"><i class="fas fa-video text-neon-blue"></i></div>
+                <div class="overlay-icon animate-bounce" style="animation-delay: 0.2s;"><i class="fas fa-microphone text-neon-pink"></i></div>
+                <div class="overlay-icon animate-bounce" style="animation-delay: 0.4s;"><i class="fas fa-comments text-neon"></i></div>
             </div>
         </div>
     </div>
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <div class="logo-section">
-                    <div class="logo"><img src="favicon.png" alt="RemoteVM Logo" loading="lazy"></div>
-                    <h1>R.V.M</h1>
-                    <div id="statusIndicator" class="status-indicator" aria-label="وضعیت تماس"></div>
+
+    <header class="sticky top-0 z-40 bg-black/50 backdrop-blur-xl border-b border-neon-blue/20">
+        <div class="container mx-auto px-4">
+            <div class="header-content flex justify-between items-center py-4">
+                <!-- لوگو و وضعیت در سمت راست (چون dir=rtl) -->
+                <div class="logo-section flex items-center gap-3">
+                    <div class="logo w-10 h-10">
+                        <img src="favicon.png" alt="RemoteVM Logo" loading="lazy" class="w-full h-full object-contain">
+                    </div>
+                    <h1 class="text-2xl font-bold bg-gradient-to-r from-neon-blue to-neon-pink bg-clip-text text-transparent">R.V.M</h1>
+                    <div id="statusIndicator" class="status-indicator w-3 h-3 rounded-full bg-gray-600" aria-label="وضعیت تماس"></div>
                 </div>
-                <div class="header-actions">
-                    <button id="themeToggle" class="btn btn-neutral" aria-label="تغییر تم" data-tooltip="تغییر تم روشن/تاریک">
+
+                <!-- دکمه‌ها در سمت چپ (راست در RTL) -->
+                <div class="header-actions flex items-center gap-3">
+                    <button id="themeToggle" class="btn btn-neutral p-2" aria-label="تغییر تم">
                         <i class="fas fa-moon"></i>
                     </button>
-                    <button id="menuToggle" class="menu-toggle"><i class="fas fa-bars"></i></button>
+                    <!-- دکمه همبرگری در سمت راست (هماهنگ با منو) -->
+                    <button id="menuToggle" class="menu-toggle p-2">
+                        <i class="fas fa-bars"></i>
+                    </button>
                 </div>
             </div>
         </div>
     </header>
+
+        <!-- Mobile Menu -->
+    <!-- Mobile Menu Overlay -->
+    <div id="menuOverlay" class="fixed inset-0 bg-black/70 z-40 opacity-0 invisible transition-all duration-300 pointer-events-none"></div>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="menuOverlay" class="fixed inset-0 bg-black/70 z-40 opacity-0 invisible transition-all duration-300 pointer-events-none"></div>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="menuOverlay" class="fixed inset-0 bg-black/70 z-40 opacity-0 invisible transition-all duration-300 pointer-events-none"></div>
+
     <!-- Mobile Menu -->
-    <div id="menuOverlay" class="menu-overlay"></div>
-    <nav id="mobileMenu" class="mobile-menu">
-        <ul>
-            <li><a href="https://remotevm.ir" target="_blank" rel="noopener noreferrer"><i class="fas fa-home"></i> خانه</a></li>
-            <li><a href="https://remotevm.ir/remotevm-tut.html" target="_blank" rel="noopener noreferrer"><i class="fas fa-book"></i> راهنما</a></li>
-            <li><a href="https://call.remotevm.ir" target="_blank" rel="noopener noreferrer"><i class="fas fa-video"></i> تماس تصویری</a></li>
-            <li><a href="https://about.remotevm.ir" target="_blank" rel="noopener noreferrer"><i class="fas fa-info-circle"></i> درباره ما</a></li>
-            <li><a href="https://room.remotevm.ir" target="_blank" rel="noopener noreferrer"><i class="fas fa-users-cog"></i> پنل حرفه‌ای</a></li>
-            <li><a href="https://remotevm.ir/product" target="_blank" rel="noopener noreferrer"><i class="fas fa-box-open"></i> محصولات</a></li>
-            <li><a href="https://seccam.remotevm.ir" target="_blank" rel="noopener noreferrer"><i class="fas fa-eye"></i> Security Cam</a></li>
-            <li><a href="https://class.remotevm.ir" target="_blank" rel="noopener noreferrer"><i class="fas fa-chalkboard-teacher"></i> RVM ClassRoom</a></li>
-        </ul>
+    <nav id="mobileMenu" class="fixed top-0 right-0 h-full w-64 bg-black/90 backdrop-blur-xl z-50 transform translate-x-full transition-transform duration-300 overflow-y-auto">
+        <div class="p-6">
+            <!-- دکمه بستن + عنوان -->
+            <div class="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
+                <h3 class="text-lg font-bold text-neon-blue">منو</h3>
+                <button id="closeMenuBtn" class="text-white hover:text-neon-pink transition text-xl w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <ul class="space-y-4">
+                <li><a href="https://remotevm.ir" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-neon-blue hover:text-neon-pink transition"><i class="fas fa-home"></i> خانه</a></li>
+                <li><a href="https://remotevm.ir/remotevm-tut.html" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-neon-blue hover:text-neon-pink transition"><i class="fas fa-book"></i> راهنما</a></li>
+                <li><a href="https://call.remotevm.ir" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-neon-blue hover:text-neon-pink transition"><i class="fas fa-video"></i> تماس تصویری</a></li>
+                <li><a href="https://about.remotevm.ir" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-neon-blue hover:text-neon-pink transition"><i class="fas fa-info-circle"></i> درباره ما</a></li>
+                <li><a href="https://room.remotevm.ir" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-neon-blue hover:text-neon-pink transition"><i class="fas fa-users-cog"></i> پنل حرفه‌ای</a></li>
+                <li><a href="https://seccam.remotevm.ir" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-neon-blue hover:text-neon-pink transition"><i class="fas fa-eye"></i> Security Cam</a></li>
+                <li><a href="https://class.remotevm.ir" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-neon-blue hover:text-neon-pink transition"><i class="fas fa-chalkboard-teacher"></i> ساخت کلاس آنلاین</a></li>
+                <li><a href="https://linkgen.remotevm.ir/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-neon-blue hover:text-neon-pink transition"><i class="fa-solid fa-sliders"></i> مولد لینک</a></li>
+                <li><a href="https://remotevm.ir/product" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-neon-blue hover:text-neon-pink transition"><i class="fas fa-box-open"></i> محصولات</a></li>
+            </ul>
+        </div>
     </nav>
     <!-- Main -->
     <main>
-        <div class="container">
+        <div class="container mx-auto">
+
+            <!-- Intro Section -->
             <section class="intro-section hero-gradient py-20 px-4 relative overflow-hidden scroll-reveal">
-                <h2 class="section-title text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-l from-neon-blue to-neon-pink bg-clip-text text-transparent">RemoteVM</h2>
-                <p class="intro-text text-xl md:text-2xl mb-8 max-w-2xl mx-auto opacity-90">پلتفرم حرفه‌ای برای برگزاری کنفرانس‌های ویدیویی و جلسات آنلاین با کیفیت بالا و بدون تاخیر.</p>
-                <div class="flex justify-center space-x-4 space-x-reverse mt-12">
-                    <div class="w-3 h-3 bg-neon-blue rounded-full animate-ping"></div>
-                    <div class="w-3 h-3 bg-neon-pink rounded-full animate-ping" style="animation-delay: 0.5s;"></div>
-                    <div class="w-3 h-3 bg-primary rounded-full animate-ping" style="animation-delay: 1s;"></div>
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div class="relative w-72 h-72 flex items-center justify-center opacity-80">
+                        <div class="absolute w-32 h-32 rounded-full border border-cyan-400/60 animate-ring"></div>
+                        <div class="absolute w-52 h-52 rounded-full border border-pink-500/40 animate-ring" style="animation-delay: 0.5s;"></div>
+                        <div class="absolute w-72 h-72 rounded-full border border-indigo-400/30 animate-ring" style="animation-delay: 1s;"></div>
+                        <div class="absolute w-24 h-24 rounded-full bg-gradient-to-r from-cyan-400 via-pink-500 to-indigo-400 blur-2xl opacity-70 animate-pulse"></div>
+                    </div>
                 </div>
+                <h2 class="section-title text-5xl md:text-7xl font-bold mb-6 relative z-10 bg-gradient-to-l from-neon-blue to-neon bg-clip-text text-transparent">
+                    RemoteVM
+                </h2>
+                <p class="intro-text text-xl md:text-2xl mb-8 max-w-2xl mx-auto  relative z-10">
+                    پلتفرم حرفه‌ای برای برگزاری کنفرانس‌های ویدیویی و جلسات آنلاین با کیفیت بالا و بدون تاخیر.
+                </p>
                 <div class="absolute inset-0 opacity-20">
                     <div class="absolute top-20 left-10 w-20 h-20 bg-neon-blue rounded-full blur-xl animate-float"></div>
                     <div class="absolute bottom-20 right-10 w-32 h-32 bg-neon-pink rounded-full blur-2xl animate-float" style="animation-delay: 1s;"></div>
                 </div>
             </section>
+
+            <!-- Video Call Studio -->
             <section id="call" class="video-call-card py-20 px-4 bg-black/20 backdrop-blur-sm scroll-reveal">
                 <h2 class="section-title text-3xl md:text-4xl font-bold text-center mb-12">استودیو انتقال تصویر</h2>
-                <div class="max-w-4xl mx-auto">
+                <div class="w-full mx-auto">
+                    <!-- Controls -->
                     <div class="controls-grid grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
                         <button id="startCallBtn" class="btn btn-primary" aria-label="شروع کنید" data-tooltip="شروع جلسه جدید">
                             <i class="fas fa-play"></i> شروع کنید
                         </button>
-                        <button id="fullscreenBtn" class="btn btn-secondary hidden" aria-label="تمام‌صفحه" data-tooltip="نمایش در حالت تمام‌صفحه">
+                        <button id="fullscreenBtn" class="btn btn-secondary hidden" aria-label="تمام‌صفحه">
                             <i class="fas fa-expand"></i> تمام‌صفحه
                         </button>
-                        <button id="stopCallBtn" class="btn btn-danger hidden" aria-label="توقف تماس" data-tooltip="پایان دادن به تماس">
+                        <button id="stopCallBtn" class="btn btn-danger hidden" aria-label="توقف تماس">
                             <i class="fas fa-stop"></i> توقف تماس
                         </button>
-                        <button id="resetCallBtn" class="btn btn-neutral hidden" aria-label="ریست صفحه" data-tooltip="اعمال کیفیت جدید و ریست اتصال">
+                        <button id="resetCallBtn" class="btn btn-neutral hidden" aria-label="ریست اتصال">
                             <i class="fas fa-sync"></i> ریست اتصال
                         </button>
-                        <button id="muteBtn" class="btn btn-warning hidden" aria-label="بی‌صدا کردن" data-tooltip="بی‌صدا/باصدا کردن میکروفون">
+                        <button id="muteBtn" class="btn btn-warning hidden" aria-label="بی‌صدا کردن">
                             <i class="fas fa-microphone"></i> بی‌صدا
                         </button>
                     </div>
-                    <div class="form-group">
+
+                    <!-- Quality & Toggles -->
+                    <div class="form-group mb-6">
                         <label for="qualitySelect" class="form-label">کیفیت ویدیو:</label>
-                        <select id="qualitySelect" class="bg-white/10 backdrop-blur-sm border border-neon-blue rounded-xl p-3 text-white">
+                        <select id="qualitySelect" class="bg-white/10 backdrop-blur-sm border border-neon-blue rounded-xl p-3 text-white w-full">
                             <option value="2">480p</option>
                             <option value="1" selected>720p (پیش‌فرض)</option>
                             <option value="0">1080p</option>
                         </select>
                     </div>
-                    <div class="toggle-group">
-                        <label for="uiCheckbox" class="toggle-label">
-                            <i class="fas fa-eye-slash"></i>
-                            <span>حذف رابط کاربری (UI-less)</span>
-                        </label>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="uiCheckbox" />
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                    <div class="toggle-group">
-                        <label for="conferenceCheckbox" class="toggle-label">
-                            <i class="fas fa-users"></i>
-                            <span>حالت کنفرانس</span>
-                        </label>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="conferenceCheckbox" />
-                            <span class="toggle-slider"></span>
-                        </label>
-                        <label for="selfviewCheckbox" class="toggle-label">
-                            <i class="fas fa-user-circle"></i>
-                            <span>نمایش (Selfview)</span>
-                        </label>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="selfviewCheckbox" disabled />
-                            <span class="toggle-slider"></span>
-                        </label>                        
-                    </div>
 
-                    <button id="advancedSettingsToggle" class="btn btn-neutral advanced-toggle">
-                        <span>تنظیمات بیشتر</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div id="advancedSettingsPanel" class="hidden advanced-panel">
-                        <div class="toggle-group">
-                            <label for="stereoCheckbox" class="toggle-label">
-                                <i class="fas fa-volume-high"></i>
-                                <span>صدای استریو</span>
+                    <div class="toggle-group grid grid-cols-1 sm:grid-cols-3 gap-6 justify-items-center mb-6">
+
+
+                        <div class="flex items-center gap-3 w-full max-w-xs justify-between">
+                            <label for="conferenceCheckbox" class="toggle-label flex items-center gap-2 cursor-pointer text-sm md:text-base">
+                                <i class="fas fa-users"></i> <span>حالت کنفرانس</span>
                             </label>
                             <label class="toggle-switch">
-                                <input type="checkbox" id="stereoCheckbox" />
+                                <input type="checkbox" id="conferenceCheckbox">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="flex items-center gap-3 w-full max-w-xs justify-between opacity-50">
+                            <label for="selfviewCheckbox" class="toggle-label flex items-center gap-2 cursor-pointer text-sm md:text-base">
+                                <i class="fas fa-user-circle"></i> <span> Selfview</span>
+                            </label>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="selfviewCheckbox" disabled>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Settings -->
+                    <button id="advancedSettingsToggle" class="btn btn-neutral advanced-toggle w-full mb-6">
+                        <span>تنظیمات بیشتر</span>
+                        <i class="fas fa-chevron-down ml-2"></i>
+                    </button>
+
+                    <div id="advancedSettingsPanel" class="hidden advanced-panel space-y-6 mb-8">
+                        <!-- Stereo, Codec, Bitrate, Devices -->
+                        <div class="toggle-group">
+                            <label for="stereoCheckbox" class="toggle-label"><i class="fas fa-volume-high"></i> صدای استریو</label>
+                            <label class="toggle-switch"><input type="checkbox" id="stereoCheckbox"><span class="toggle-slider"></span></label>
+                        </div>
+                        <!-- حذف رابط کاربری — دقیقاً مثل صدای استریو -->
+                        <div class="flex items-center justify-between w-full mb-4">
+                            <label for="uiCheckbox" class="flex items-center gap-2 cursor-pointer text-sm md:text-base text-gray-300">
+                                <i class="fas fa-eye-slash text-purple-400"></i>
+                                <span>حذف رابط کاربری</span>
+                            </label>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="uiCheckbox">
                                 <span class="toggle-slider"></span>
                             </label>
                         </div>
                         <div class="form-group">
                             <label for="codecSelect" class="form-label">کدک ویدیویی:</label>
-                            <select id="codecSelect" class="bg-white/10 backdrop-blur-sm border border-neon-blue rounded-xl p-3 text-white">
+                            <select id="codecSelect" class="bg-white/10 backdrop-blur-sm border border-neon-blue rounded-xl p-3 text-white w-full">
                                 <option value="">پیش‌فرض</option>
-                                <option value="vp8">VP8 (سازگاری بالا)</option>
-                                <option value="vp9">VP9 (کیفیت بالاتر)</option>
-                                <option value="h264">H.264 (سازگاری با iOS)</option>
+                                <option value="vp8">VP8</option>
+                                <option value="vp9">VP9</option>
+                                <option value="h264">H.264</option>
                             </select>
                         </div>
+
                         <div class="form-group">
-                            <label for="bitrateRange" class="form-label">بیت‌ریت (کیفیت ویدیو):</label>
-                            <div style="display: flex; align-items: center; gap: 1rem;">
-                                <input type="range" id="bitrateRange" min="500" max="8000" step="500" value="2500" />
-                                <span id="bitrateValue" style="min-width: 70px; text-align: center;">2500 kbps</span>
+                            <label for="bitrateRange" class="form-label">بیت‌ریت:</label>
+                            <div class="flex items-center gap-3">
+                                <input type="range" id="bitrateRange" min="500" max="8000" step="500" value="2500" class="flex-1">
+                                <span id="bitrateValue" class="text-sm font-mono">2500 kbps</span>
                             </div>
                         </div>
+
                         <div class="form-group">
                             <label for="audioDeviceSelect" class="form-label">دستگاه صوتی:</label>
-                            <select id="audioDeviceSelect" class="bg-white/10 backdrop-blur-sm border border-neon-blue rounded-xl p-3 text-white">
-                                <option value="">دستگاه پیش‌فرض</option>
+                            <select id="audioDeviceSelect" class="bg-white/10 backdrop-blur-sm border border-neon-blue rounded-xl p-3 text-white w-full">
+                                <option value="">پیش‌فرض</option>
                             </select>
                         </div>
+
                         <div class="form-group">
                             <label for="videoDeviceSelect" class="form-label">دوربین:</label>
-                            <select id="videoDeviceSelect" class="bg-white/10 backdrop-blur-sm border border-neon-blue rounded-xl p-3 text-white">
-                                <option value="">دوربین پیش‌فرض</option>
+                            <select id="videoDeviceSelect" class="bg-white/10 backdrop-blur-sm border border-neon-blue rounded-xl p-3 text-white w-full">
+                                <option value="">پیش‌فرض</option>
                             </select>
                         </div>
                     </div>
+
+                    <!-- Video Frame -->
                     <div id="callContainer" class="video-frame relative bg-gradient-to-br from-gray-900 to-black rounded-2xl overflow-hidden shadow-2xl mb-8 hidden">
-                        <div id="loadingOverlay" class="loading-overlay hidden">
-                            <div class="loader">
-                                <div class="dot"></div>
-                                <div class="dot"></div>
-                                <div class="dot"></div>
+                        <div id="loadingOverlay" class="loading-overlay absolute inset-0 bg-black/80 flex items-center justify-center hidden">
+                            <div class="flex flex-col items-center gap-4">
+                                <div class="loader flex gap-2">
+                                    <div class="dot w-3 h-3 bg-neon-blue rounded-full animate-bounce"></div>
+                                    <div class="dot w-3 h-3 bg-neon-pink rounded-full animate-bounce" style="animation-delay: 0.1s;"></div>
+                                    <div class="dot w-3 h-3 bg-indigo-400 rounded-full animate-bounce" style="animation-delay: 0.2s;"></div>
+                                </div>
+                                <span class="text-neon-blue font-semibold text-lg">در حال اتصال...</span>
                             </div>
-                            <span style="color: #667eea; font-weight: 600;">در حال برقراری ارتباط...</span>
                         </div>
-                        <iframe
-                            id="vdoFrame"
-                            allow="camera; microphone; fullscreen; display-capture"
-                            title="پنجره استودیو انتقال تصویر"
-                            src=""
-                            loading="lazy"
-                        ></iframe>
+                        <iframe id="vdoFrame" allow="camera; microphone; fullscreen; display-capture" title="استودیو انتقال تصویر" src="" loading="lazy" class="w-full "></iframe>
                     </div>
-                    <section id="obsSection" class="link-section hidden">
-                        <label for="obsLink" class="form-label">لینک مخصوص OBS:</label>
-                        <div class="link-input-group">
-                            <input type="text" id="obsLink" class="link-input" readonly />
+
+                    <!-- OBS & Invite Links -->
+                    <section id="obsSection" class="link-section hidden mb-6">
+                        <label for="obsLink" class="form-label">لینک OBS:</label>
+                        <div class="link-input-group flex gap-2">
+                            <input type="text" id="obsLink" class="link-input flex-1" readonly>
                             <button id="copyLinkBtn" class="btn btn-neutral"><i class="fas fa-copy"></i></button>
                         </div>
-                        <p id="copyMessage" class="message success hidden"></p>
-                        <p id="errorMessage" class="message error hidden"></p>
+                        <p id="copyMessage" class="message success hidden text-green-400 text-sm mt-1"></p>
+                        <p id="errorMessage" class="message error hidden text-red-400 text-sm mt-1"></p>
                     </section>
+
                     <section id="inviteSection" class="link-section hidden">
-                        <label for="inviteLink" class="form-label">لینک دعوت به اتاق:</label>
-                        <div class="link-input-group">
-                            <input type="text" id="inviteLink" class="link-input" readonly />
+                        <label for="inviteLink" class="form-label">لینک دعوت:</label>
+                        <div class="link-input-group flex gap-2">
+                            <input type="text" id="inviteLink" class="link-input flex-1" readonly>
                             <button id="copyInviteBtn" class="btn btn-neutral"><i class="fas fa-copy"></i></button>
                         </div>
-                        <p id="copyInviteMessage" class="message success hidden"></p>
-                        <p id="errorInviteMessage" class="message error hidden"></p>
+                        <p id="copyInviteMessage" class="message success hidden text-green-400 text-sm mt-1"></p>
+                        <p id="errorInviteMessage" class="message error hidden text-red-400 text-sm mt-1"></p>
                     </section>
                 </div>
             </section>
+
+            <!-- Features Section -->
             <section id="features" class="py-20 px-4 scroll-reveal">
                 <h2 class="section-title text-3xl md:text-4xl font-bold text-center mb-16">ویژگی‌ها و قابلیت‌ها</h2>
-                <div class="features-grid grid grid-cols-1 md:grid-cols-3 gap-8" id="featuresContainer"></div>
+                <div class="features-grid grid grid-cols-1 md:grid-cols-3 gap-8" id="featuresContainer">
+                    <!-- پر شده توسط JS -->
+                </div>
             </section>
+
+            <!-- About Section -->
             <section id="about" class="py-20 px-4 text-center scroll-reveal">
                 <h2 class="section-title text-3xl md:text-4xl font-bold mb-6">درباره RemoteVM</h2>
-                <p class="text-xl mb-8 max-w-2xl mx-auto opacity-90">RemoteVM آینده ارتباطات ویدیویی را شکل می‌دهد. با تمرکز بر نوآوری، امنیت و سادگی، ما به شما کمک می‌کنیم تا جلسات خود را به سطح جدیدی برسانید.</p>
+                <p class="text-xl mb-8 max-w-2xl mx-auto opacity-90">
+                    RemoteVM آینده ارتباطات ویدیویی را شکل می‌دهد. با تمرکز بر نوآوری، امنیت و سادگی، ما به شما کمک می‌کنیم تا جلسات خود را به سطح جدیدی برسانید.
+                </p>
                 <a href="https://about.remotevm.ir/docs" class="btn btn-primary about-btn" target="_blank" rel="noopener noreferrer">
                     <i class="fas fa-book-open"></i> مشاهده مستندات
                 </a>
             </section>
         </div>
     </main>
+
     <!-- Footer -->
     <footer class="py-12 px-4 bg-black/30 backdrop-blur-sm text-center border-t border-neon-blue/20">
-        <div class="container">
+        <div class="container mx-auto">
             <p class="mb-4">&copy; 2025 RemoteVM. All rights reserved.</p>
-            <div class="footer-links flex justify-center space-x-6 space-x-reverse">
-                <a href="https://remotevm.ir/privacy-policy.html" target="_blank" class="text-neon-blue hover:text-neon-pink transition-colors" rel="noopener noreferrer">سیاست حریم خصوصی</a>
-                <a href="https://remotevm.ir/remotevm-tut.html" target="_blank" class="text-neon-blue hover:text-neon-pink transition-colors" rel="noopener noreferrer">شرایط استفاده</a>
-                <a href="https://remotevm.site/contact" target="_blank" class="text-neon-blue hover:text-neon-pink transition-colors" rel="noopener noreferrer">تماس با ما</a>
+            <div class="footer-links flex justify-center gap-6 flex-wrap">
+                <a href="https://remotevm.ir/privacy-policy.html" target="_blank" class="text-neon-blue hover:text-neon-pink transition" rel="noopener noreferrer">سیاست حریم خصوصی</a>
+                <a href="https://remotevm.ir/remotevm-tut.html" target="_blank" class="text-neon-blue hover:text-neon-pink transition" rel="noopener noreferrer">شرایط استفاده</a>
+                <a href="https://remotevm.site/contact" target="_blank" class="text-neon-blue hover:text-neon-pink transition" rel="noopener noreferrer">تماس با ما</a>
             </div>
         </div>
     </footer>
-    <script>
-        // Theme Toggle
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        if (savedTheme === 'light') {
-            document.body.classList.add('light-mode');
-            document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
-        }
-        document.getElementById('themeToggle').addEventListener('click', () => {
-            document.body.classList.toggle('light-mode');
-            const isLight = document.body.classList.contains('light-mode');
-            localStorage.setItem('theme', isLight ? 'light' : 'dark');
-            document.getElementById('themeToggle').innerHTML = isLight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-        });
-        // Mobile Menu
-        const menuToggle = document.getElementById('menuToggle');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const menuOverlay = document.getElementById('menuOverlay');
-        menuToggle.addEventListener('click', () => {
-            mobileMenu.classList.toggle('active');
-            menuOverlay.classList.toggle('active');
-        });
-        menuOverlay.addEventListener('click', () => {
-            mobileMenu.classList.remove('active');
-            menuOverlay.classList.remove('active');
-        });
-        // Hide Overlay
-        setTimeout(() => document.getElementById('overlay').classList.add('hidden'), 2000);
-        // Scroll Reveal
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('revealed');
-            });
-        });
-        document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
-        // Features
-        const features = [
-            { icon: 'fa-chalkboard-teacher', title: 'ساخت کلاس مجازی', desc: 'ساخت کلاس با چند کلیک.', url: 'https://class.remotevm.ir' },
-            { icon: 'fa-phone', title: 'تماس تصویری', desc: 'شروع تماس ویدیویی با چند کلیک.', url: 'https://call.remotevm.ir' },
-            { icon: 'fa-camera', title: 'انتقال تصویر دوربین موبایل', desc: 'دوربین موبایل را بدون نرم‌افزار به وب‌کم بی‌سیم تبدیل کنید.', url: 'https://webcam.remotevm.ir' },
-            { icon: 'fa-video', title: 'ویدیو با کیفیت بالا', desc: 'انتقال ویدیو با رزولوشن بالا بدون تاخیر.' },
-            { icon: 'fa-microphone', title: 'صدا استریو', desc: 'صدای شفاف و با کیفیت استریو.' },
-            { icon: 'fa-users', title: 'ویدیو کنفرانس', desc: 'جلسات گروهی با چندین شرکت‌کننده.' },
-            { icon: 'fa-lock', title: 'امنیت بالا', desc: 'رمزنگاری end-to-end برای حفظ حریم خصوصی.' },
-            { icon: 'fa-mobile-alt', title: 'سازگار با موبایل', desc: 'پشتیبانی کامل از دستگاه‌های موبایل.' },
-            { icon: 'fa-cloud', title: 'ارتباط P2P', desc: 'بدون نیاز به نصب نرم‌افزار.' }
-        ];
-        const featuresContainer = document.getElementById('featuresContainer');
-        features.forEach((feature, index) => {
-            const card = document.createElement('div');
-            card.className = 'feature-card featured-card card-hover scroll-reveal cursor-custom animate-fade-in-up';
-            card.style.animationDelay = `${index * 0.1}s`;
-            let content = `
-                <i class="fas ${feature.icon} feature-icon micro-animation"></i>
-                <h3 class="feature-title text-xl font-semibold mb-2">${feature.title}</h3>
-                <p class="feature-desc text-gray-300">${feature.desc}</p>
-            `;
-            if (feature.url) {
-                content += `<a href="${feature.url}" target="_blank" rel="noopener noreferrer" class="btn-modern mt-4 block w-full text-center">شروع کنید</a>`;
-            }
-            card.innerHTML = content;
-            featuresContainer.appendChild(card);
-        });
-        // Toggle Animation
-        document.querySelectorAll('.toggle-switch input').forEach(toggle => {
-            toggle.addEventListener('change', (e) => {
-                const slider = e.target.nextElementSibling;
-                if (slider) slider.style.transform = e.target.checked ? 'translateX(-22px)' : 'translateX(0)';
-            });
-        });
-        // Micro Interactions
-        document.querySelectorAll('.micro-animation').forEach(el => {
-            el.addEventListener('mouseenter', () => el.style.transform = 'rotate(5deg) scale(1.1)');
-            el.addEventListener('mouseleave', () => el.style.transform = 'rotate(0deg) scale(1)');
-        });
-        // Call Logic
-        const startCallBtn = document.getElementById('startCallBtn');
-        const stopCallBtn = document.getElementById('stopCallBtn');
-        const resetCallBtn = document.getElementById('resetCallBtn');
-        const fullscreenBtn = document.getElementById('fullscreenBtn');
-        const muteBtn = document.getElementById('muteBtn');
-        const qualitySelect = document.getElementById('qualitySelect');
-        const uiCheckbox = document.getElementById('uiCheckbox');
-        const stereoCheckbox = document.getElementById('stereoCheckbox');
-        const codecSelect = document.getElementById('codecSelect');
-        const bitrateRange = document.getElementById('bitrateRange');
-        const bitrateValue = document.getElementById('bitrateValue');
-        const conferenceCheckbox = document.getElementById('conferenceCheckbox');
-        const selfviewCheckbox = document.getElementById('selfviewCheckbox');
-        const vdoFrame = document.getElementById('vdoFrame');
-        const callContainer = document.getElementById('callContainer');
-        const obsSection = document.getElementById('obsSection');
-        const obsLink = document.getElementById('obsLink');
-        const copyLinkBtn = document.getElementById('copyLinkBtn');
-        const copyMessage = document.getElementById('copyMessage');
-        const errorMessage = document.getElementById('errorMessage');
-        const inviteSection = document.getElementById('inviteSection');
-        const inviteLink = document.getElementById('inviteLink');
-        const copyInviteBtn = document.getElementById('copyInviteBtn');
-        const copyInviteMessage = document.getElementById('copyInviteMessage');
-        const errorInviteMessage = document.getElementById('errorInviteMessage');
-        const loadingOverlay = document.getElementById('loadingOverlay');
-        const statusIndicator = document.getElementById('statusIndicator');
-        const advancedSettingsToggle = document.getElementById('advancedSettingsToggle');
-        const advancedSettingsPanel = document.getElementById('advancedSettingsPanel');
-        const videoCallCard = document.getElementById('call');
-        const audioDeviceSelect = document.getElementById('audioDeviceSelect');
-        const videoDeviceSelect = document.getElementById('videoDeviceSelect');
-        bitrateValue.textContent = `${bitrateRange.value} kbps`;
-        advancedSettingsToggle.addEventListener('click', () => {
-            advancedSettingsPanel.classList.toggle('hidden');
-            const icon = advancedSettingsToggle.querySelector('i');
-            icon.style.transform = advancedSettingsPanel.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
-        });
-        bitrateRange.addEventListener('input', () => {
-            bitrateValue.textContent = `${bitrateRange.value} kbps`;
-        });
-        // Device Enumeration
-        if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
-            navigator.mediaDevices.enumerateDevices().then(devices => {
-                const audioDevices = devices.filter(device => device.kind === 'audioinput');
-                const videoDevices = devices.filter(device => device.kind === 'videoinput');
-                audioDeviceSelect.innerHTML = '<option value="">دستگاه پیش‌فرض</option>';
-                videoDeviceSelect.innerHTML = '<option value="">دوربین پیش‌فرض</option>';
-                audioDevices.forEach((device, index) => {
-                    const option = document.createElement('option');
-                    option.value = device.deviceId;
-                    option.text = device.label || `میکروفون ${index + 1}`;
-                    audioDeviceSelect.appendChild(option);
-                });
-                videoDevices.forEach((device, index) => {
-                    const option = document.createElement('option');
-                    option.value = device.deviceId;
-                    option.text = device.label || `دوربین ${index + 1}`;
-                    videoDeviceSelect.appendChild(option);
-                });
-            }).catch(err => console.warn('مشکل در دسترسی به دستگاه‌های ورودی/خروجی:', err));
-        }
-        // Enable/Disable Selfview based on Conference mode
-        conferenceCheckbox.addEventListener('change', () => {
-            selfviewCheckbox.disabled = !conferenceCheckbox.checked;
-            if (!conferenceCheckbox.checked) {
-                selfviewCheckbox.checked = false;
-                const slider = selfviewCheckbox.nextElementSibling;
-                if (slider) slider.style.transform = 'translateX(0)';
-            }
-        });
-        function generateRandomString(length = 10) {
-            return Math.random().toString(36).substring(2, length + 2);
-        }
-        function getParams(isViewer = false) {
-            let params = [];
-            if (!isViewer) {
-                const quality = qualitySelect.value;
-                if (quality) params.push(`quality=${quality}`);
-                const audioDevice = audioDeviceSelect.value;
-                if (audioDevice) params.push(`audioinput=${audioDevice}`);
-                const videoDevice = videoDeviceSelect.value;
-                if (videoDevice) params.push(`videoinput=${videoDevice}`);
-            }
-            const codec = codecSelect.value;
-            if (codec) params.push(`codec=${codec}`);
-            const bitrate = bitrateRange.value;
-            if (bitrate) params.push(`vb=${bitrate}`);
-            if (stereoCheckbox.checked) params.push('stereo=1');
-            if (uiCheckbox.checked) params.push('cleanoutput=1');
-            if (conferenceCheckbox.checked && selfviewCheckbox.checked) params.push('minipreview=1');
-            return params.length ? `&${params.join('&')}` : '';
-        }
-        function updateUrlParams(baseUrl, newParams) {
-            if (!baseUrl) return '';
-            try {
-                const url = new URL(baseUrl, 'https://live.remotevm.ir/');
-                const searchParams = new URLSearchParams(url.search);
-                for (const key of Array.from(searchParams.keys())) {
-                    if (key !== 'room' && key !== 'push' && key !== 'view' && key !== 'scene') {
-                        searchParams.delete(key);
-                    }
-                }
-                if (newParams) {
-                    const paramsString = newParams.replace(/^&/, '');
-                    const newSearchParams = new URLSearchParams(paramsString);
-                    for (const [key, value] of newSearchParams) {
-                        searchParams.set(key, value);
-                    }
-                }
-                url.search = searchParams.toString();
-                return url.toString();
-            } catch (error) {
-                console.error('خطا در بروزرسانی پارامترهای URL:', error);
-                return baseUrl;
-            }
-        }
-        let currentID = '';
-        let isConference = false;
-        let baseObsUrl = '';
-        let baseInviteUrl = '';
-        let baseIframeUrl = '';
-        let isIframeLoaded = false;
-        let isMuted = false;
-        let loadingTimer = null;
-        function setupIframeLoadHandler() {
-            if (loadingTimer) {
-                clearTimeout(loadingTimer);
-                loadingTimer = null;
-            }
-            vdoFrame.onload = null;
-            vdoFrame.onload = function () {
-                console.log('iframe loaded');
-                isIframeLoaded = true;
-                loadingOverlay.classList.add('hidden');
-                if (loadingTimer) {
-                    clearTimeout(loadingTimer);
-                    loadingTimer = null;
-                }
-            };
-            loadingTimer = setTimeout(() => {
-                console.log('loading timeout reached');
-                if (!isIframeLoaded) {
-                    isIframeLoaded = true;
-                    loadingOverlay.classList.add('hidden');
-                }
-                loadingTimer = null;
-            }, 8000);
-        }
-        function updateCallLinks(changedElement, isStart = false) {
-            if (!currentID) return;
-            const isConferenceChange = changedElement === conferenceCheckbox;
-            const newIsConference = conferenceCheckbox.checked;
-            if ((isConferenceChange && newIsConference !== isConference) || isStart) {
-                isConference = newIsConference;
-                if (isConference) {
-                    baseIframeUrl = `https://live.remotevm.ir/?room=${currentID}`;
-                    baseObsUrl = `https://live.remotevm.ir/?room=${currentID}&scene=0`;
-                    baseInviteUrl = `https://live.remotevm.ir/?room=${currentID}`;
-                    inviteSection.classList.remove('hidden');
-                } else {
-                    baseIframeUrl = `https://live.remotevm.ir/?push=${currentID}`;
-                    baseObsUrl = `https://live.remotevm.ir/?view=${currentID}`;
-                    baseInviteUrl = '';
-                    inviteSection.classList.add('hidden');
-                    selfviewCheckbox.checked = false;
-                    const slider = selfviewCheckbox.nextElementSibling;
-                    if (slider) slider.style.transform = 'translateX(0)';
-                }
-                loadingOverlay.classList.remove('hidden');
-                isIframeLoaded = false;
-                setupIframeLoadHandler();
-                vdoFrame.src = updateUrlParams(baseIframeUrl, getParams());
-                isMuted = false;
-                muteBtn.innerHTML = '<i class="fas fa-microphone"></i> بی‌صدا';
-            }
-            obsLink.value = updateUrlParams(baseObsUrl, getParams(true));
-            if (isConference) {
-                inviteLink.value = updateUrlParams(baseInviteUrl, getParams());
-            }
-        }
-        startCallBtn.addEventListener('click', () => {
-            try {
-                currentID = generateRandomString();
-                baseObsUrl = '';
-                baseInviteUrl = '';
-                baseIframeUrl = '';
-                callContainer.classList.remove('hidden');
-                loadingOverlay.classList.remove('hidden');
-                obsSection.classList.remove('hidden');
-                updateCallLinks(startCallBtn, true);
-                startCallBtn.classList.add('hidden');
-                stopCallBtn.classList.remove('hidden');
-                resetCallBtn.classList.remove('hidden');
-                fullscreenBtn.classList.remove('hidden');
-                muteBtn.classList.remove('hidden');
-                statusIndicator.classList.remove('status-inactive');
-                statusIndicator.classList.add('status-active');
-                videoCallCard.classList.add('active');
-            } catch (error) {
-                console.error('خطا در شروع تماس:', error);
-                errorMessage.textContent = 'خطا در شروع تماس. لطفاً دوباره تلاش کنید.';
-                errorMessage.classList.remove('hidden');
-                setTimeout(() => errorMessage.classList.add('hidden'), 3000);
-            }
-        });
-        stopCallBtn.addEventListener('click', () => {
-            try {
-                if (loadingTimer) {
-                    clearTimeout(loadingTimer);
-                    loadingTimer = null;
-                }
-                vdoFrame.src = '';
-                obsLink.value = '';
-                inviteLink.value = '';
-                loadingOverlay.classList.add('hidden');
-                callContainer.classList.add('hidden');
-                obsSection.classList.add('hidden');
-                inviteSection.classList.add('hidden');
-                startCallBtn.classList.remove('hidden');
-                stopCallBtn.classList.add('hidden');
-                resetCallBtn.classList.add('hidden');
-                fullscreenBtn.classList.add('hidden');
-                muteBtn.classList.add('hidden');
-                statusIndicator.classList.add('status-inactive');
-                statusIndicator.classList.remove('status-active');
-                videoCallCard.classList.remove('active');
-                currentID = '';
-                baseObsUrl = '';
-                baseInviteUrl = '';
-                baseIframeUrl = '';
-                isIframeLoaded = false;
-                isMuted = false;
-                selfviewCheckbox.checked = false;
-                selfviewCheckbox.disabled = true;
-                const slider = selfviewCheckbox.nextElementSibling;
-                if (slider) slider.style.transform = 'translateX(0)';
-            } catch (error) {
-                console.error('خطا در توقف تماس:', error);
-            }
-        });
-        resetCallBtn.addEventListener('click', () => {
-            if (!currentID || !baseIframeUrl) return;
-            try {
-                loadingOverlay.classList.remove('hidden');
-                isIframeLoaded = false;
-                setupIframeLoadHandler();
-                vdoFrame.src = updateUrlParams(baseIframeUrl, getParams());
-                updateCallLinks(resetCallBtn);
-                isMuted = false;
-                muteBtn.innerHTML = '<i class="fas fa-microphone"></i> بی‌صدا';
-            } catch (error) {
-                console.error('خطا در بازنشانی تماس:', error);
-                errorMessage.textContent = 'خطا در بازنشانی تماس. لطفاً دوباره تلاش کنید.';
-                errorMessage.classList.remove('hidden');
-                setTimeout(() => errorMessage.classList.add('hidden'), 3000);
-            }
-        });
-        fullscreenBtn.addEventListener('click', () => {
-            try {
-                if (vdoFrame.requestFullscreen) {
-                    vdoFrame.requestFullscreen();
-                } else if (vdoFrame.mozRequestFullScreen) {
-                    vdoFrame.mozRequestFullScreen();
-                } else if (vdoFrame.webkitRequestFullscreen) {
-                    vdoFrame.webkitRequestFullscreen();
-                } else if (vdoFrame.msRequestFullscreen) {
-                    vdoFrame.msRequestFullscreen();
-                }
-            } catch (error) {
-                console.error('خطا در ورود به حالت تمام‌صفحه:', error);
-                errorMessage.textContent = 'خطا در نمایش تمام‌صفحه.';
-                errorMessage.classList.remove('hidden');
-                setTimeout(() => errorMessage.classList.add('hidden'), 3000);
-            }
-        });
-        muteBtn.addEventListener('click', () => {
-            if (!isIframeLoaded) {
-                errorMessage.textContent = 'لطفاً صبر کنید تا ارتباط برقرار شود.';
-                errorMessage.classList.remove('hidden');
-                setTimeout(() => errorMessage.classList.add('hidden'), 3000);
-                return;
-            }
-            try {
-                isMuted = !isMuted;
-                muteBtn.innerHTML = isMuted ? '<i class="fas fa-microphone-slash"></i> باصدا' : '<i class="fas fa-microphone"></i> بی‌صدا';
-                vdoFrame.contentWindow.postMessage({ mute: isMuted }, 'https://live.remotevm.ir');
-            } catch (err) {
-                console.error('خطا در تغییر وضعیت بی‌صدا:', err);
-                errorMessage.textContent = 'خطا در تغییر وضعیت میکروفون.';
-                errorMessage.classList.remove('hidden');
-                setTimeout(() => errorMessage.classList.add('hidden'), 3000);
-            }
-        });
-        copyLinkBtn.addEventListener('click', () => {
-            if (!obsLink.value) return;
-            try {
-                if (navigator.clipboard) {
-                    navigator.clipboard.writeText(obsLink.value).then(() => {
-                        copyMessage.textContent = 'لینک با موفقیت کپی شد!';
-                        copyMessage.classList.remove('hidden');
-                        setTimeout(() => copyMessage.classList.add('hidden'), 3000);
-                    }).catch(err => {
-                        console.error('خطا در کپی لینک:', err);
-                        obsLink.select();
-                        document.execCommand('copy');
-                        copyMessage.textContent = 'لینک کپی شد!';
-                        copyMessage.classList.remove('hidden');
-                        setTimeout(() => copyMessage.classList.add('hidden'), 3000);
-                    });
-                } else {
-                    obsLink.select();
-                    document.execCommand('copy');
-                    copyMessage.textContent = 'لینک کپی شد!';
-                    copyMessage.classList.remove('hidden');
-                    setTimeout(() => copyMessage.classList.add('hidden'), 3000);
-                }
-            } catch (err) {
-                console.error('خطا در کپی لینک:', err);
-                errorMessage.textContent = 'خطا در کپی لینک.';
-                errorMessage.classList.remove('hidden');
-                setTimeout(() => errorMessage.classList.add('hidden'), 3000);
-            }
-        });
-        copyInviteBtn.addEventListener('click', () => {
-            if (!inviteLink.value) return;
-            try {
-                if (navigator.clipboard) {
-                    navigator.clipboard.writeText(inviteLink.value).then(() => {
-                        copyInviteMessage.textContent = 'لینک دعوت با موفقیت کپی شد!';
-                        copyInviteMessage.classList.remove('hidden');
-                        setTimeout(() => copyInviteMessage.classList.add('hidden'), 3000);
-                    }).catch(err => {
-                        console.error('خطا در کپی لینک دعوت:', err);
-                        inviteLink.select();
-                        document.execCommand('copy');
-                        copyInviteMessage.textContent = 'لینک دعوت کپی شد!';
-                        copyInviteMessage.classList.remove('hidden');
-                        setTimeout(() => copyInviteMessage.classList.add('hidden'), 3000);
-                    });
-                } else {
-                    inviteLink.select();
-                    document.execCommand('copy');
-                    copyInviteMessage.textContent = 'لینک دعوت کپی شد!';
-                    copyInviteMessage.classList.remove('hidden');
-                    setTimeout(() => copyInviteMessage.classList.add('hidden'), 3000);
-                }
-            } catch (err) {
-                console.error('خطا در کپی لینک دعوت:', err);
-                errorInviteMessage.textContent = 'خطا در کپی لینک دعوت.';
-                errorInviteMessage.classList.remove('hidden');
-                setTimeout(() => errorInviteMessage.classList.add('hidden'), 3000);
-            }
-        });
-        [qualitySelect, codecSelect, bitrateRange, stereoCheckbox, uiCheckbox, conferenceCheckbox, selfviewCheckbox, audioDeviceSelect, videoDeviceSelect].forEach(element => {
-            element.addEventListener('change', () => updateCallLinks(element));
-        });
-        window.addEventListener('message', (event) => {
-            if (event.origin !== 'https://live.remotevm.ir') return;
-            try {
-                const data = event.data;
-                if (data.connected === true) {
-                    loadingOverlay.classList.add('hidden');
-                    isIframeLoaded = true;
-                    if (loadingTimer) {
-                        clearTimeout(loadingTimer);
-                        loadingTimer = null;
-                    }
-                } else if (data.connected === false) {
-                    errorMessage.textContent = 'ارتباط قطع شد. در حال تلاش مجدد...';
-                    errorMessage.classList.remove('hidden');
-                    setTimeout(() => errorMessage.classList.add('hidden'), 3000);
-                }
-                if (data.isMuted !== undefined) {
-                    isMuted = data.isMuted;
-                    muteBtn.innerHTML = isMuted ? '<i class="fas fa-microphone-slash"></i> باصدا' : '<i class="fas fa-microphone"></i> بی‌صدا';
-                }
-            } catch (error) {
-                console.error('خطا در پردازش پیام از iframe:', error);
-            }
-        });
-        // Initial status
-        statusIndicator.classList.add('status-inactive');
-    </script>
+
+
+<script src="assets/main.js" defer></script>
 </body>
 </html>
